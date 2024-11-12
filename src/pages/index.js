@@ -1,0 +1,9 @@
+export { default as HomePage } from './homePage/HomePage';
+export { default as CategoryPage } from './categoryPage/CategoryPage';
+export { default as ProductDetailPage } from './productDetailPage/ProductDetailPage';
+export { default as ShoppingCartPage } from './shoppingCartPage/ShoppingCartPage';
+export { default as PaymentMethodPage } from './paymentMethodPage/PaymentMethodPage';
+export { default as Login } from './loginPage/LoginPage';
+export { default as AddProductsPage } from './addProductsPage/AddProductsPage';
+export { default as UnauthorizedPage } from './unauthorizedPage/UnauthorizedPage';
+export { default as CatalogPage } from './catalogPage/CatalogPage';
