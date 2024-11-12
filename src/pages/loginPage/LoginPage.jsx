@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, fetchSignIn
 import { auth } from "./firebaseConfig";
 import { ref, set } from "firebase/database";
 import { database } from "./firebaseConfig";
+import './LoginPage.css';
 
 function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -86,52 +87,52 @@ function LoginPage() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.rightPanel}>
-        <h2 style={styles.title}>{isLogin ? "Iniciar sesión" : "Registrarse"}</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
+    <div className="login-container">
+      <div className="login-right-panel">
+        <h2 className="login-title">{isLogin ? "Iniciar sesión" : "Registrarse"}</h2>
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="login-form-group">
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              style={styles.input}
+              className="login-input"
               placeholder="Email"
               required
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="login-form-group">
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              style={styles.input}
+              className="login-input"
               placeholder="Contraseña"
               required
             />
           </div>
           {!isLogin && (
-            <div style={styles.formGroup}>
+            <div className="login-form-group">
               <input
                 type="password"
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                style={styles.input}
+                className="login-input"
                 placeholder="Confirmar Contraseña"
                 required
               />
             </div>
           )}
-          {error && <p style={styles.error}>{error}</p>}
-          <button type="submit" style={styles.button}>
-            <span style={styles.buttonText}>
+          {error && <p className="login-error">{error}</p>}
+          <button type="submit" className="login-button">
+            <span className="login-button-text">
               {isLogin ? "Ingresar" : "Registrarse"}
             </span>
           </button>
-          <p style={styles.toggleText} onClick={() => setIsLogin(!isLogin)}>
+          <p className="login-toggle-text" onClick={() => setIsLogin(!isLogin)}>
             {isLogin 
               ? "¿No tienes cuenta? Regístrate aquí" 
               : "¿Ya tienes cuenta? Inicia sesión"}
@@ -141,101 +142,5 @@ function LoginPage() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    height: '100vh',
-    backgroundImage: 'url(src/assets/loginbackground.png)',
-  },
-  leftPanel: {
-    flex: '1',
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  rightPanel: {
-    flex: '1',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: '40px',
-    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-    backdropFilter: 'blur(10px)',
-  },
-  title: {
-    fontSize: '32px',
-    marginBottom: '40px',
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '300',
-    letterSpacing: '2px',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    width: '100%',
-    maxWidth: '400px',
-    margin: '0 auto',
-  },
-  formGroup: {
-    position: 'relative',
-  },
-  input: {
-    width: '100%',
-    padding: '15px',
-    fontSize: '16px',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    borderRadius: '8px',
-    color: '#fff',
-    transition: 'all 0.3s ease',
-    outline: 'none',
-    '&:focus': {
-      borderColor: '#00f2fe',
-      boxShadow: '0 0 15px rgba(0, 242, 254, 0.3)',
-    },
-  },
-  button: {
-    padding: '15px',
-    fontSize: '16px',
-    borderRadius: '8px',
-    border: 'none',
-    background: 'linear-gradient(45deg, #00f2fe, #4facfe)',
-    color: '#fff',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    position: 'relative',
-    overflow: 'hidden',
-    '&:hover': {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 5px 15px rgba(0, 242, 254, 0.4)',
-    },
-  },
-  buttonText: {
-    position: 'relative',
-    zIndex: '1',
-    fontWeight: '500',
-    letterSpacing: '1px',
-  },
-  error: {
-    color: '#ff4757',
-    textAlign: 'center',
-    fontSize: '14px',
-    marginTop: '10px',
-  },
-  toggleText: {
-    color: '#fff',
-    textAlign: 'center',
-    marginTop: '20px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    textDecoration: 'underline',
-    transition: 'opacity 0.3s ease',
-    '&:hover': {
-      opacity: 0.8,
-    },
-  }
-};
 
 export default LoginPage;
