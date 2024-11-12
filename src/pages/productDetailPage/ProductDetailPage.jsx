@@ -1,21 +1,23 @@
 import { Typography, Box, Grid, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 function ProductDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { addToCart } = useCart();
 
   // Simulación de datos del producto
   const product = {
     id: id,
     name: 'Vestido de Baño Coral',
     description: 'Elegante vestido de baño de una pieza con detalles únicos',
-    price: '₡20000',
+    price: 20000, // Usa el valor numérico para cálculos
     image: 'src/assets/vestido1.jpg'
   };
 
   const handleAddToCart = () => {
-    // Aquí puedes agregar la lógica para añadir al carrito
+    addToCart(product);
     navigate('/cart');
   };
 
@@ -51,7 +53,7 @@ function ProductDetailPage() {
             {product.description}
           </Typography>
           <Typography variant="h5" color="primary" gutterBottom>
-            {product.price}
+            ₡{product.price.toLocaleString()}
           </Typography>
           <Button 
             variant="contained" 
@@ -68,4 +70,4 @@ function ProductDetailPage() {
   );
 }
 
-export default ProductDetailPage; 
+export default ProductDetailPage;
