@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  CardElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, Typography, TextField, Alert } from '@mui/material';
 
 function PaymentForm() {
@@ -13,6 +9,12 @@ function PaymentForm() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
+
+  // Campos adicionales
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [cardholderName, setCardholderName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,6 +29,14 @@ function PaymentForm() {
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: elements.getElement(CardElement),
+        billing_details: {
+          name: cardholderName, // Nombre del titular
+          email: email, // Correo
+          phone: phone, // Teléfono
+          address: {
+            line1: address, // Dirección
+          },
+        },
       });
 
       if (error) {
@@ -51,11 +61,11 @@ function PaymentForm() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto', p: 3, bgcolor: 'white', borderRadius: 2, boxShadow: 3 }}>
+    <Box sx={{ maxWidth: 500, mx: 'auto', p: 3 }}>
       <Typography variant="h5" gutterBottom>
-        Método de Pago
+        Información de Pago
       </Typography>
-      
+
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
@@ -63,49 +73,65 @@ function PaymentForm() {
       )}
 
       <form onSubmit={handleSubmit}>
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h6">Datos Personales</Typography>
-          <TextField label="Dirección" fullWidth sx={{ mb: 2 }} />
-          <TextField label="Correo" fullWidth sx={{ mb: 2 }} />
-          <TextField label="Teléfono" fullWidth sx={{ mb: 2 }} />
-        </Box>
-
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h6">Detalles de Tarjeta</Typography>
-          <Box
-            sx={{
-              border: '1px solid #ccc',
-              p: 2,
-              borderRadius: 1,
-            }}
-          >
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
-                    },
-                  },
-                  invalid: {
-                    color: '#9e2146',
+        <TextField
+          label="Dirección"
+          variant="outlined"
+          fullWidth
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Correo"
+          variant="outlined"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Teléfono"
+          variant="outlined"
+          fullWidth
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Nombre del Titular"
+          variant="outlined"
+          fullWidth
+          value={cardholderName}
+          onChange={(e) => setCardholderName(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <Box sx={{ border: '1px solid #ccc', p: 2, borderRadius: 1, mb: 2 }}>
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: '16px',
+                  color: '#424770',
+                  '::placeholder': {
+                    color: '#aab7c4',
                   },
                 },
-              }}
-            />
-          </Box>
+                invalid: {
+                  color: '#9e2146',
+                },
+              },
+            }}
+          />
         </Box>
-
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
-          <Button variant="contained" color="primary" type="submit" disabled={!stripe || processing}>
-            {processing ? 'Procesando...' : 'Confirmar'}
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={() => navigate('/')}>
-            Cancelar
-          </Button>
-        </Box>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={processing || !stripe || !elements}
+        >
+          {processing ? 'Procesando...' : 'Confirmar Pago'}
+        </Button>
       </form>
     </Box>
   );
