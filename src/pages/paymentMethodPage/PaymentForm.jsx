@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Box, Button, Typography, TextField, Alert } from '@mui/material';
+import { CartContext } from '../../context/CartContext';
 
 function PaymentForm() {
+  const { total } = useContext(CartContext);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -64,6 +66,9 @@ function PaymentForm() {
     <Box sx={{ maxWidth: 500, mx: 'auto', p: 3 }}>
       <Typography variant="h5" gutterBottom>
         Información de Pago
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom sx={{ color: 'text.secondary' }}>
+        Total a pagar: ₡{total.toLocaleString()}
       </Typography>
 
       {error && (

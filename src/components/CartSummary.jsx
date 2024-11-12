@@ -1,26 +1,35 @@
-import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { Box, Typography, Divider, List, ListItem, ListItemText } from '@mui/material';
 
-function CartSummary({ items }) {
+const CartSummary = () => {
+  const { cartItems, total } = useContext(CartContext);
+
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto', p: 3, mt: 3, bgcolor: '#f9f9f9', borderRadius: 2, boxShadow: 1 }}>
+    <Box sx={{ width: '100%', bgcolor: 'background.paper', p: 2, borderRadius: 1 }}>
       <Typography variant="h6" gutterBottom>
-        Resumen del Carrito
+        Resumen de Compra
       </Typography>
       <List>
-        {items.map((item, index) => (
-          <ListItem key={index} sx={{ borderBottom: '1px solid #ddd' }}>
+        {cartItems.map((item, index) => (
+          <ListItem key={index} sx={{ py: 1, px: 0 }}>
             <ListItemText
               primary={item.name}
-              secondary={`Precio: $${item.price.toFixed(2)}`}
+              secondary={item.description}
             />
+            <Typography variant="body2">
+              ₡{item.price.toLocaleString()}
+            </Typography>
           </ListItem>
         ))}
       </List>
-      <Typography variant="h6" sx={{ textAlign: 'right', mt: 2 }}>
-        Total: ${items.reduce((total, item) => total + item.price, 0).toFixed(2)}
-      </Typography>
+      <Divider sx={{ my: 2 }} />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h6">Total</Typography>
+        <Typography variant="h6">₡{total.toLocaleString()}</Typography>
+      </Box>
     </Box>
   );
-}
+};
 
 export default CartSummary;
