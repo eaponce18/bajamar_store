@@ -8,6 +8,7 @@ import {
   Grid
 } from '@mui/material';
 
+
 function ProductList({ category }) {
   // Aquí deberías obtener los productos de la categoría seleccionada
   // Puedes usar una API o un estado global como Redux/Context

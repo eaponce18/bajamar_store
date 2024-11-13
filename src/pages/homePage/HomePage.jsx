@@ -6,6 +6,8 @@ import CategoriesSection from '../../components/CategoriesSection';
 import './HomePage.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../loginPage/firebaseConfig';
+import { signOut } from 'firebase/auth';
 
 function HomePage() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,6 +30,16 @@ function HomePage() {
     const companyInfoSection = document.getElementById('company-info');
     if (companyInfoSection) {
       companyInfoSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      handleClose();
+      navigate('/');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
     }
   };
 
@@ -76,7 +88,7 @@ function HomePage() {
             <MenuItem onClick={handleClose}>Mi Perfil</MenuItem>
             <MenuItem onClick={handleClose}>Mi Carrito</MenuItem>
             <MenuItem onClick={handleClose}>Configuración</MenuItem>
-            <MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
