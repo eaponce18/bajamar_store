@@ -1,10 +1,9 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { auth } from '../services/firebaseConfig';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { auth, database } from '../pages/loginPage/firebaseConfig';
+import { ref, get, child } from 'firebase/database';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const AuthContext = createContext(null);
-const db = getFirestore();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -13,14 +12,20 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Obtener datos adicionales del usuario desde Firestore
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const userData = userDoc.data();
-        
-        setUser({
-          ...user,
-          role: userData?.role || 'user',
-        });
+        // Obtener datos adicionales del usuario desde Realtime Database
+        const dbRef = ref(database);
+        try {
+          const snapshot = await get(child(dbRef, `users/${user.uid}`));
+          const userData = snapshot.val();
+          
+          setUser({
+            ...user,
+            role: userData?.role || 'user',
+          });
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setUser(user);
+        }
       } else {
         setUser(null);
       }

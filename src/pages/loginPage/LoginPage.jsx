@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import { ref, set } from "firebase/database";
-import { database } from "./firebaseConfig";
+import { registerUser } from "../../services/auth";
 import './LoginPage.css';
 
 function LoginPage() {
@@ -27,19 +26,6 @@ function LoginPage() {
     e.preventDefault();
     setError("");
 
-    // Verificar si el email ya existe antes de intentar registrar
-    if (!isLogin) {
-      try {
-        const methods = await fetchSignInMethodsForEmail(auth, formData.email);
-        if (methods.length > 0) {
-          setError("Este correo electrónico ya está registrado. Por favor, inicia sesión o usa otro correo.");
-          return;
-        }
-      } catch (err) {
-        console.error("Error checking email:", err);
-      }
-    }
-
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, formData.email, formData.password);
@@ -49,12 +35,7 @@ function LoginPage() {
           setError("Las contraseñas no coinciden");
           return;
         }
-        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-        await set(ref(database, 'users/' + userCredential.user.uid), {
-          email: formData.email,
-          role: "user",
-          createdAt: new Date().toISOString()
-        });
+        await registerUser(formData.email, formData.password);
         navigate("/home");
       }
     } catch (err) {
@@ -62,7 +43,7 @@ function LoginPage() {
       
       switch (err.code) {
         case 'auth/email-already-in-use':
-          errorMessage = "Este correo electrónico ya está registrado. Por favor, inicia sesión o usa otro correo.";
+          errorMessage = "Este correo electrónico ya está registrado.";
           break;
         case 'auth/invalid-email':
           errorMessage = "El correo electrónico no es válido.";
@@ -77,9 +58,7 @@ function LoginPage() {
           errorMessage = "Contraseña incorrecta.";
           break;
         default:
-          errorMessage = isLogin 
-            ? "Error de inicio de sesión: " + err.message
-            : "Error de registro: " + err.message;
+          errorMessage = err.message;
       }
       
       setError(errorMessage);
