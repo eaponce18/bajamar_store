@@ -11,19 +11,8 @@ function CatalogPage() {
   };
 
   return (
-    <Box sx={{ pt: 8 }}>
-      <Container maxWidth="lg">
-        <Typography 
-          variant="h3" 
-          sx={{ 
-            textAlign: 'center', 
-            my: 4,
-            fontWeight: 600,
-            color: '#333'
-          }}
-        >
-          Nuestro Catálogo
-        </Typography>
+    <Box>
+      <Container>
         <CategoriesSection onCategoryClick={handleCategoryClick} />
         {selectedCategory && (
           <ProductList category={selectedCategory} />

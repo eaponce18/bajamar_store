@@ -9,8 +9,16 @@ import {
 } from '@mui/material';
 
 function ProductList({ category }) {
-  // Aquí deberías obtener los productos de la categoría seleccionada
-  // Puedes usar una API o un estado global como Redux/Context
+  // Verificar si category existe y tiene productos
+  if (!category || !category.products) {
+    return (
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="body1">
+          No hay productos disponibles en esta categoría.
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ mt: 4 }}>
@@ -18,7 +26,7 @@ function ProductList({ category }) {
         {category.name}
       </Typography>
       <Grid container spacing={3}>
-        {category.products?.map((product) => (
+        {category.products.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
             <Card>
               <CardMedia
@@ -26,15 +34,23 @@ function ProductList({ category }) {
                 height="200"
                 image={product.image}
                 alt={product.name}
+                sx={{ objectFit: 'cover' }}
               />
               <CardContent>
-                <Typography variant="h6">{product.name}</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="h6" gutterBottom>
+                  {product.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
                   {product.description}
                 </Typography>
                 <Typography variant="h6" color="primary">
-                  ${product.price}
+                  ₡{product.price?.toLocaleString()}
                 </Typography>
+                {product.stock !== undefined && (
+                  <Typography variant="body2" color="text.secondary">
+                    Stock disponible: {product.stock}
+                  </Typography>
+                )}
               </CardContent>
             </Card>
           </Grid>
