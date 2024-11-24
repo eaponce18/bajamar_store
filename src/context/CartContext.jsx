@@ -13,11 +13,13 @@ export const CartProvider = ({ children }) => {
     setCartItems(cartItems.filter(item => item.id !== itemId));
   };
 
-  const updateQuantity = (index, newQuantity) => {
+  const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
-    const newItems = [...cartItems];
-    newItems[index].quantity = newQuantity;
-    setCartItems(newItems);
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
   };
 
   const clearCart = () => {
