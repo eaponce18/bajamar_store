@@ -1,5 +1,8 @@
 import { Typography, Grid, Box, Container, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import vestido1 from '../../assets/vestido1.jpg';
+import vestido2 from '../../assets/vestido2.jpg';
+import vestido3 from '../../assets/vestido3.jpeg';
 
 function CategoryPage() {
   const navigate = useNavigate();
@@ -14,19 +17,19 @@ function CategoryPage() {
       id: 1,
       name: 'Vestido de Baño Coral',
       description: 'Elegante vestido de baño de una pieza',
-      image: 'src/assets/vestido1.jpg'
+      image: vestido1
     },
     {
       id: 2,
       name: 'Vestido de Baño Azul',
       description: 'Diseño moderno con detalles únicos',
-      image: 'src/assets/vestido2.jpg'
+      image: vestido2
     },
     {
       id: 3,
       name: 'Vestido de Baño Tropical',
       description: 'Estampado tropical para el verano',
-      image: 'src/assets/vestido3.jpeg'
+      image: vestido3
     },
     // Puedes agregar más productos aquí
   ];

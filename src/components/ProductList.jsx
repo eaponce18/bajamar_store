@@ -8,6 +8,7 @@ import {
   Grid
 } from '@mui/material';
 
+
 function ProductList({ category }) {
   // Verificar si category existe y tiene productos
   if (!category || !category.products) {

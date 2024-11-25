@@ -9,6 +9,12 @@ import {
   CardActionArea 
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import vestido1 from '../assets/vestido1.jpg';
+import vestido2 from '../assets/vestido2.jpg';
+import vestido3 from '../assets/vestido3.jpeg';
+import playera1 from '../assets/playera1.jpg';
+import short1 from '../assets/short1.png';
+import sombrero1 from '../assets/sombrero1.png';
 
 export default function CatalogSection() {
   const navigate = useNavigate();
@@ -88,37 +94,37 @@ export default function CatalogSection() {
 
 const itemData = [
   {
-    img: 'src/assets/vestido1.jpg',
+    img: vestido1,
     title: 'Vestido Rojo Verano',
     author: 'Colección Premium',
     id: 1,
   },
   {
-    img: 'src/assets/vestido2.jpg',
+    img: vestido2,
     title: 'Vestido Amarillo Sol',
     author: 'Colección Elegance',
     id: 2,
   },
   {
-    img: 'src/assets/vestido3.jpeg',
+    img: vestido3,
     title: 'Vestido Azul Marina',
     author: 'Colección Resort',
     id: 3,
   },
   {
-    img: 'src/assets/playera1.jpg',
+    img: playera1,
     title: 'Playera Celeste Brisa',
     author: 'Colección Casual',
     id: 4,
   },
   {
-    img: 'src/assets/short1.png',
+    img: short1,
     title: 'Short Flores Tropical',
     author: 'Colección Summer',
     id: 5,
   },
   {
-    img: 'src/assets/sombrero1.png',
+    img: sombrero1,
     title: 'Sombrero Riviera',
     author: 'Accesorios Premium',
     id: 6,

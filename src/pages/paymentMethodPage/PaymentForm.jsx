@@ -84,7 +84,23 @@ function PaymentForm() {
           fullWidth
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': {
+              background: 'rgba(255, 255, 255, 0.9)',
+              '& fieldset': {
+                borderColor: 'rgba(36, 117, 183, 0.3)',
+                borderRadius: '12px',
+              },
+              '&:hover fieldset': {
+                borderColor: '#2475B7',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#164c74',
+                borderWidth: '2px',
+              },
+            },
+          }}
         />
         <TextField
           label="Correo"
@@ -92,7 +108,23 @@ function PaymentForm() {
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': {
+              background: 'rgba(255, 255, 255, 0.9)',
+              '& fieldset': {
+                borderColor: 'rgba(36, 117, 183, 0.3)',
+                borderRadius: '12px',
+              },
+              '&:hover fieldset': {
+                borderColor: '#2475B7',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#164c74',
+                borderWidth: '2px',
+              },
+            },
+          }}
         />
         <TextField
           label="Teléfono"
@@ -100,7 +132,23 @@ function PaymentForm() {
           fullWidth
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': {
+              background: 'rgba(255, 255, 255, 0.9)',
+              '& fieldset': {
+                borderColor: 'rgba(36, 117, 183, 0.3)',
+                borderRadius: '12px',
+              },
+              '&:hover fieldset': {
+                borderColor: '#2475B7',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#164c74',
+                borderWidth: '2px',
+              },
+            },
+          }}
         />
         <TextField
           label="Nombre del Titular"
@@ -108,7 +156,23 @@ function PaymentForm() {
           fullWidth
           value={cardholderName}
           onChange={(e) => setCardholderName(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': {
+              background: 'rgba(255, 255, 255, 0.9)',
+              '& fieldset': {
+                borderColor: 'rgba(36, 117, 183, 0.3)',
+                borderRadius: '12px',
+              },
+              '&:hover fieldset': {
+                borderColor: '#2475B7',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#164c74',
+                borderWidth: '2px',
+              },
+            },
+          }}
         />
         <Box sx={{ border: '1px solid #ccc', p: 2, borderRadius: 1, mb: 2 }}>
           <CardElement
@@ -134,6 +198,18 @@ function PaymentForm() {
           color="primary"
           fullWidth
           disabled={processing || !stripe || !elements}
+          sx={{
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #2475B7 0%, #164c74 100%)',
+            textTransform: 'none',
+            fontSize: '1.1rem',
+            py: 1.5,
+            boxShadow: '0 4px 15px rgba(36, 117, 183, 0.3)',
+            '&:hover': {
+              background: 'linear-gradient(135deg, #164c74 0%, #0f3854 100%)',
+              boxShadow: '0 6px 20px rgba(36, 117, 183, 0.4)',
+            },
+          }}
         >
           {processing ? 'Procesando...' : 'Confirmar Pago'}
         </Button>
